@@ -7,7 +7,24 @@ const rotaProdutos = require('./routes/produtos');
 
 const rotaPedidos = require('./routes/pedidos');
 
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+
 app.use(morgan('dev'));
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Alow-Origin', '*');
+    res.header('Access-Control-Alow-Header',
+        'Origin, X-Requested-With, Content-Type, Accepted, Authorization');
+
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Alow-Methods',
+            'GET, POST, PUT, PATCH, DELETE');
+        return res.status(200).send({});
+    }
+
+    next();
+});
 
 app.use('/produtos', rotaProdutos);
 app.use('/pedidos', rotaPedidos);
