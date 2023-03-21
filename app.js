@@ -7,6 +7,9 @@ const rotaProdutos = require('./routes/produtos');
 
 const rotaPedidos = require('./routes/pedidos');
 
+const rotaUsuarios = require('./routes/usuarios');
+
+
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
@@ -26,6 +29,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/usuarios', rotaUsuarios);
 app.use('/produtos', rotaProdutos);
 app.use('/pedidos', rotaPedidos);
 
